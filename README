@@ -1,0 +1,41 @@
+
+
+	Task-ul 1 a fost implementat pe baza laboratoarelor 2(trimiterea unui 
+fisier) si 4(implementarea unui protocol cu fereastra glisanta).
+
+	Fisierul send.c dezvolta implementarea transmitatorului, iar recv.c 
+implementarea receptorului.
+
+	In sender prima data am calculat lungimea ferestrei cu formula: w = 
+(speed*delay*1000)/(sizeof(msg)*8), iar apoi am inceput procesul de trimitere 
+a fisierului. Transmitatorul primeste fisierul ca prim argument, transmitand 
+denumirea si lungimea lui mai intai.Am deschis fisierul si am calculat dimensi-
+unea cu ajutorul structurii file_data si a functiei f_stat, iar cu ajutorul di-
+mensiunii am calculat numarul de cadre. Am pus in payload numele,l-am trimis si 
+am asteptat confirmarea. Dupa, am setat payloadul la 0 si am trimis lungimea 
+prin acelasi proces. Urmeaza trimiterea efectiva a continutului prin fereastra 
+glisanta.Am luat variabila unknown pentru a contoriza numarul pachetelor pentru
+care inca nu am primit confirmare. Cata vreme mai avem pachete de trimis, pay-
+loadul se seteaza la 0 si se salveaza in readF numarul de bytes cititi din 
+fisier, atribuindu-se ulterior lungimii pachetului. Dupa ce un pachet a fost 
+trimis si confirmat, se elibereaza un loc din fereastra(w++), iar numarul 
+pachetelor despre care nu stim daca s-au trimis scade. Asadar fiecare
+confirmare ne permite sa introducem un nou cadru in fereastra glisanta. Dupa ce
+se trimit toate pachetele, procesul se termina, iar fisierul se inchide.
+
+	Receptorul asteapta datele in ordine de la transmitator si le scrie 
+intr-un fisier. Se primeste denumirea , se creaza un nou fisier in care se vor
+pune pachetele, iar apoi se va primi si lungimea fisierului trimis. In acest
+timp send ul asteapta confirmarea ca datele au fost primite pentru a incepe
+procesul. Pachetul cu care se lucreaza aici este r ul. In bucla pentru for
+mesajele sunt primite si scrise in fisier.
+
+	 De asemenea, odata ce mesajul este primit, se trimite confirmarea 
+catre sender. Cand se ajunge la numarul maxim de pachete ce trebuie trimise,
+functia se termina.
+
+	La calculul lui COUNT am adaugat 1 pentru a ma asigura ca este numar
+intreg.
+
+	
+
